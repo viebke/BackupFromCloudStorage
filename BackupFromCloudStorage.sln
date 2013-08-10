@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackupFromCloud", "WindowsFormsApplication2\BackupFromCloud.csproj", "{C35CBBFD-0B73-4A3C-AB7E-20DC1AE59AE0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackupFromCloud", "BackupFromCloudStorage\BackupFromCloud.csproj", "{C35CBBFD-0B73-4A3C-AB7E-20DC1AE59AE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

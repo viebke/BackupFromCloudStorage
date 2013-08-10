@@ -38,5 +38,10 @@ namespace BackupFromCloud
             gForm.Show(this.dockPanel1);
 
         }
+
+        private void toolStripLabel1_Click(object sender, EventArgs e)
+        {
+            new AboutForm().Show();
+        }
     }
 }
