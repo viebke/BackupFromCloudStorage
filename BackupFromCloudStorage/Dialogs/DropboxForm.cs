@@ -36,22 +36,39 @@ namespace BackupFromCloud.Dialogs
             {
                 this.controller = new DropboxController();
                 this.model = controller.Get();
+
+                model.FolderUpdatedEvent += model_FolderUpdatedEvent;
+                model.UpdateProgressEvent += model_UpdateProgressEvent;
+                model.UpdateNameEvent += model_UpdateNameEvent;
             }
             catch
             {
                 MessageBox.Show("Unable to initiate model, see log for more details");
             }
 
-            model.FolderUpdatedEvent += model_FolderUpdatedEvent;
-            model.UpdateProgressEvent += model_UpdateProgressEvent;
-
             this.buttonBackup.Enabled = false;
             this.buttonOpenFolder.Enabled = false;
             this.buttonCancel.Enabled = true;
             this.textBox1.Enabled = false;
+            this.labelNameValue.Text = string.Empty;
 
             this.backgroundWorker1.RunWorkerAsync();
             this.labelCountDownload.Text = string.Empty;
+        }
+
+        void model_UpdateNameEvent(string name)
+        {
+            //cross thread - so you don't get the cross theading exception
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke((MethodInvoker)delegate
+                {
+                    model_UpdateNameEvent(name);
+                });
+                return;
+            }
+
+            this.labelNameValue.Text = name;
         }
 
         private void model_UpdateProgressEvent(int count, int tot)
@@ -117,6 +134,7 @@ namespace BackupFromCloud.Dialogs
             this.buttonOpenFolder.Enabled = true;
             this.buttonCancel.Enabled = false;
             this.textBox1.Enabled = true;
+            this.labelNameValue.Text = string.Empty;
 
             this.progressBarDownload.Value = 0;
             this.labelCountDownload.Text = string.Empty;
@@ -131,6 +149,7 @@ namespace BackupFromCloud.Dialogs
             this.buttonCancel.Enabled = false;
             this.textBox1.Enabled = true;
             this.labelCountDownload.Text = string.Empty;
+            this.labelNameValue.Text = string.Empty;
         }
     }
 }

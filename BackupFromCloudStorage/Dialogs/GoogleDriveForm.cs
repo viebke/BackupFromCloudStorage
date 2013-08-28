@@ -63,6 +63,7 @@ namespace BackupFromCloud.Dialogs
             this.buttonCancel.Enabled = false;
             this.buttonOpenFolder.Enabled = true;
             this.textBoxPath.Enabled = true;
+            this.labelNameValue.Text = string.Empty;
 
             this.backgroundWorker1.CancelAsync();
 
@@ -76,6 +77,7 @@ namespace BackupFromCloud.Dialogs
             this.buttonCancel.Enabled = false;
             this.textBoxPath.Enabled = true;
             this.buttonOpenFolder.Enabled = true;
+            this.labelNameValue.Text = string.Empty;
 
             MessageBox.Show("Backup completed");
 
@@ -93,6 +95,7 @@ namespace BackupFromCloud.Dialogs
 
                 model.UpdateProgressGetFilesEvent += model_UpdateProgressGetFilesEvent;
                 model.UpdateProgressDownloadFilesEvent += model_UpdateProgressDownloadFilesEvent;
+                model.UpdateNameEvent += model_UpdateNameEvent;
 
                 try
                 {
@@ -107,6 +110,20 @@ namespace BackupFromCloud.Dialogs
             {
                 MessageBox.Show("Unable to initiate model, see log for more information");
             }
+        }
+
+        void model_UpdateNameEvent(string name){
+            
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke((MethodInvoker)delegate
+                {
+                    model_UpdateNameEvent(name);
+                });
+                return;
+            }
+
+            this.labelNameValue.Text = name;
         }
 
         void model_UpdateProgressDownloadFilesEvent(int count, int tot)

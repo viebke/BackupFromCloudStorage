@@ -41,6 +41,8 @@ namespace BackupFromCloud.Dialogs
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.checkBoxUpdateMetadata = new System.Windows.Forms.CheckBox();
             this.labelCountDownload = new System.Windows.Forms.Label();
+            this.labelName = new System.Windows.Forms.Label();
+            this.labelNameValue = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonBackup
@@ -141,11 +143,30 @@ namespace BackupFromCloud.Dialogs
             this.labelCountDownload.Size = new System.Drawing.Size(0, 13);
             this.labelCountDownload.TabIndex = 10;
             // 
+            // labelName
+            // 
+            this.labelName.AutoSize = true;
+            this.labelName.Location = new System.Drawing.Point(222, 48);
+            this.labelName.Name = "labelName";
+            this.labelName.Size = new System.Drawing.Size(38, 13);
+            this.labelName.TabIndex = 11;
+            this.labelName.Text = "Name:";
+            // 
+            // labelNameValue
+            // 
+            this.labelNameValue.AutoSize = true;
+            this.labelNameValue.Location = new System.Drawing.Point(267, 48);
+            this.labelNameValue.Name = "labelNameValue";
+            this.labelNameValue.Size = new System.Drawing.Size(0, 13);
+            this.labelNameValue.TabIndex = 12;
+            // 
             // DropboxForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(615, 227);
+            this.Controls.Add(this.labelNameValue);
+            this.Controls.Add(this.labelName);
             this.Controls.Add(this.labelCountDownload);
             this.Controls.Add(this.checkBoxUpdateMetadata);
             this.Controls.Add(this.buttonOpenFolder);
@@ -178,6 +199,8 @@ namespace BackupFromCloud.Dialogs
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.CheckBox checkBoxUpdateMetadata;
         private System.Windows.Forms.Label labelCountDownload;
+        private System.Windows.Forms.Label labelName;
+        private System.Windows.Forms.Label labelNameValue;
     }
 }
 

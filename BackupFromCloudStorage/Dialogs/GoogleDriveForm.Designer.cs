@@ -39,6 +39,8 @@
             this.labelCountFileInfo = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.labelCountDownload = new System.Windows.Forms.Label();
+            this.labelName = new System.Windows.Forms.Label();
+            this.labelNameValue = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonOpenFolder
@@ -93,7 +95,7 @@
             this.labelMetdataFiles.Name = "labelMetdataFiles";
             this.labelMetdataFiles.Size = new System.Drawing.Size(118, 13);
             this.labelMetdataFiles.TabIndex = 11;
-            this.labelMetdataFiles.Text = "MetadataFiles fetched: ";
+            this.labelMetdataFiles.Text = "Metadata files fetched: ";
             // 
             // buttonBackup
             // 
@@ -127,11 +129,30 @@
             this.labelCountDownload.Size = new System.Drawing.Size(0, 13);
             this.labelCountDownload.TabIndex = 20;
             // 
+            // labelName
+            // 
+            this.labelName.AutoSize = true;
+            this.labelName.Location = new System.Drawing.Point(294, 49);
+            this.labelName.Name = "labelName";
+            this.labelName.Size = new System.Drawing.Size(38, 13);
+            this.labelName.TabIndex = 21;
+            this.labelName.Text = "Name:";
+            // 
+            // labelNameValue
+            // 
+            this.labelNameValue.AutoSize = true;
+            this.labelNameValue.Location = new System.Drawing.Point(338, 49);
+            this.labelNameValue.Name = "labelNameValue";
+            this.labelNameValue.Size = new System.Drawing.Size(0, 13);
+            this.labelNameValue.TabIndex = 22;
+            // 
             // GoogleDriveForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(601, 143);
+            this.Controls.Add(this.labelNameValue);
+            this.Controls.Add(this.labelName);
             this.Controls.Add(this.labelCountFileInfo);
             this.Controls.Add(this.buttonOpenFolder);
             this.Controls.Add(this.buttonCancel);
@@ -163,5 +184,7 @@
         private System.Windows.Forms.Label labelCountFileInfo;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Label labelCountDownload;
+        private System.Windows.Forms.Label labelName;
+        private System.Windows.Forms.Label labelNameValue;
     }
 }

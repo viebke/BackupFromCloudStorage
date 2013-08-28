@@ -19,6 +19,8 @@ namespace Models
     {
         public delegate void UpdateCurrentFolderProcess(string folder);
         public delegate void UpdateProgress(int count, int total);
+        public delegate void UpdateName(string name);
+        public event UpdateName UpdateNameEvent;
         public event UpdateCurrentFolderProcess FolderUpdatedEvent;
         public event UpdateProgress UpdateProgressEvent;
 
@@ -75,6 +77,18 @@ namespace Models
         {
             LogController.AddEntryDropbox("Load started");
 
+            try
+            {
+                if (this.UpdateNameEvent != null)
+                {
+                    this.UpdateNameEvent(this.GetName());
+                }
+            }
+            catch
+            {
+                LogController.AddEntryDropbox("Unable fetching name.");                    
+            }
+
             if (updateMeta)
             {
                 MetaData root = this.client.GetMetaData("/");
@@ -121,7 +135,9 @@ namespace Models
         {
             LogController.AddEntryDropbox("Save started");
 
-            destFolderPath += @"\" + DateTime.Now.ToString("Dropbox_yyyy_MM_dd_hh_mm");
+            string name = GetName();
+
+            destFolderPath += @"\" + DateTime.Now.ToString("Dropbox_" + name + "yyyy_MM_dd_hh_mm");
 
             //Download files
             for (int i = 0; i < this.AllMetadata.Count; i++)
@@ -143,6 +159,11 @@ namespace Models
             }
 
             LogController.AddEntryDropbox("Save finished");
+        }
+
+        private string GetName()
+        {
+            return ((AccountInfo)client.AccountInfo()).display_name;
         }
 
 

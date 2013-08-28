@@ -17,6 +17,7 @@ using System.Text;
 using System.Linq;
 using System.Net;
 using System.ComponentModel;
+using Google.Apis.Authentication;
 
 namespace BackupFromCloud.Models
 {
@@ -26,6 +27,8 @@ namespace BackupFromCloud.Models
         public event UpdateProgressGetFiles UpdateProgressGetFilesEvent;
         public delegate void UpdateProgressDownloadFiles(int count, int tot);
         public event UpdateProgressDownloadFiles UpdateProgressDownloadFilesEvent;
+        public delegate void UpdateName(string name);
+        public event UpdateName UpdateNameEvent;
 
         private List<Google.Apis.Drive.v2.Data.File> files;
         private List<Google.Apis.Drive.v2.Data.File> folders;
@@ -70,6 +73,18 @@ namespace BackupFromCloud.Models
                 });
 
                 request = this.service.Files.List();
+
+                try
+                {
+                    if (this.UpdateNameEvent != null)
+                    {
+                        UpdateNameEvent(this.GetName());
+                    }
+                }
+                catch
+                {
+                    LogController.AddEntryGoogle("Unable to get name for logged in user.");
+                }
             }
             catch (Exception ex)
             {
@@ -110,7 +125,9 @@ namespace BackupFromCloud.Models
         {
             LogController.AddEntryGoogle("Save started");
 
-            destFolderPath += @"\GoogleDrive_" + DateTime.Now.ToString("yyyy_MM_dd_hh_mm");
+            string name = GetName();
+
+            destFolderPath += @"\GoogleDrive_" + name + DateTime.Now.ToString("yyyy_MM_dd_hh_mm");
 
             try
             {
@@ -146,6 +163,12 @@ namespace BackupFromCloud.Models
             LogController.AddEntryGoogle("Save finished");
         }
 
+        private string GetName()
+        {
+            string name = ((AboutResource)this.service.About).Get().Execute().Name;
+            return name;
+        }
+
         private void CreateDirectoryTree(List<Google.Apis.Drive.v2.Data.File> list, string dPath)
         {
             foreach (Google.Apis.Drive.v2.Data.File file in list)
@@ -173,7 +196,7 @@ namespace BackupFromCloud.Models
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 string parentsPath = file.Parents == null ? string.Empty : this.dirsId[file.Parents[0].Id] + @"\";
 
-                using (FileStream fs = System.IO.File.Create(destFolderPath + @"\" + parentsPath + file.Id + "." + file.FileExtension))
+                using (FileStream fs = System.IO.File.Create(destFolderPath + @"\" + parentsPath + file.Title + "." + file.FileExtension))
                 {
                     response.GetResponseStream().CopyTo(fs);
                     fs.Close();
